@@ -92,8 +92,8 @@
             background-color: var(--bg-body);
         }
         #map {
-            height: 100vh;
-            width: 100vw;
+            height: 100dvh;
+            width: 100%;
             background-color: #1a202c;
         }
         
@@ -430,6 +430,68 @@
     #splash-logo-light { display: none; }
     .light-mode #splash-logo-dark { display: none; }
     .light-mode #splash-logo-light { display: block; }
+
+    @media (max-width: 640px) {
+        #top-search-bar {
+            top: 0.75rem;
+            width: calc(100% - 1rem);
+            padding: 0.4rem;
+        }
+        #search-logo-wrapper { left: 0.75rem; }
+        #map-search-input {
+            padding-left: 3.5rem;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        #map-duration-input {
+            width: 3rem;
+            font-size: 0.85rem;
+        }
+
+        .topleft-btn {
+            left: 0.75rem;
+            width: 40px;
+            height: 40px;
+        }
+        #profile-btn { top: 4.25rem; }
+        #wallet-fab { top: 7rem; }
+        #find-nearby-fab { top: 9.75rem; }
+
+        .fullscreen-btn {
+            right: 0.75rem;
+            padding: 0.6rem;
+        }
+
+        #wallet-drawer .panel {
+            top: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            width: auto;
+            height: calc(100dvh - 1rem);
+            border-radius: 14px;
+        }
+
+        #ai-planner-dialog {
+            width: 100%;
+            max-width: none;
+            max-height: 68dvh;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        #ai-planner-dialog header {
+            padding: 0.75rem;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        #ai-planner-dialog .header-actions {
+            position: static;
+            transform: none;
+            margin-left: auto;
+            right: auto;
+            top: auto;
+            gap: 0.35rem;
+        }
+    }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
@@ -511,7 +573,7 @@
             </div>
         </div>
 
-    <input id="map-search-input" type="text" placeholder="Search for a location..." class="flex-grow bg-transparent border-none focus:ring-0 focus:outline-none text-lg placeholder-gray-500 text-center pl-20" style="color: var(--text-primary);">
+    <input id="map-search-input" type="text" placeholder="Search for a location..." class="flex-grow bg-transparent border-none focus:ring-0 focus:outline-none text-sm sm:text-lg placeholder-gray-500 text-left sm:text-center pl-16 sm:pl-20" style="color: var(--text-primary);">
     <input id="map-duration-input" type="number" placeholder="Hrs" class="w-14 sm:w-16 bg-transparent border-l focus:ring-0 focus:outline-none text-center placeholder-gray-500 custom-number-input" style="border-color: var(--border-color); color: var(--text-primary);" aria-label="Duration in hours">
         <div class="hidden sm:block relative">
             <select id="transport-mode-select" class="sr-only" aria-hidden="true" tabindex="-1">
@@ -582,16 +644,16 @@
         </button>
     
     <div id="ai-planner-dialog" class="glass-dialog hidden-dialog fixed bottom-0 left-1/2 z-10 w-[720px] max-w-[95%] rounded-t-2xl flex flex-col max-h-[55vh]">
-    <header class="p-4 border-b flex-shrink-0 relative flex items-center space-x-3" style="border-color: var(--border-color);">
-            <div class="relative h-10 w-40 flex-shrink-0">
-                <img id="logo-dark-mode" src="TravelDex dark mode.png" alt="Logo Dark" class="absolute inset-0 h-10 w-full object-contain object-left">
-                <img id="logo-light-mode" src="TravelDex light mode.png" alt="Logo Light" class="absolute inset-0 h-10 w-full object-contain object-left hidden">
+    <header class="p-4 border-b flex-shrink-0 relative flex items-center gap-2 sm:gap-3" style="border-color: var(--border-color);">
+            <div class="relative h-8 w-28 sm:h-10 sm:w-40 flex-shrink-0">
+                <img id="logo-dark-mode" src="TravelDex dark mode.png" alt="Logo Dark" class="absolute inset-0 h-8 sm:h-10 w-full object-contain object-left">
+                <img id="logo-light-mode" src="TravelDex light mode.png" alt="Logo Light" class="absolute inset-0 h-8 sm:h-10 w-full object-contain object-left hidden">
             </div>
             <div>
-                <h1 class="text-xl font-bold" style="color: var(--text-primary);">TravelDex</h1>
-                <p class="text-sm" style="color: var(--text-secondary);">Your intelligent travel assistant</p>
+                <h1 class="text-base sm:text-xl font-bold" style="color: var(--text-primary);">TravelDex</h1>
+                <p class="hidden sm:block text-sm" style="color: var(--text-secondary);">Your intelligent travel assistant</p>
             </div>
-             <div class="absolute top-1/2 -translate-y-1/2 right-4 flex items-center space-x-2">
+             <div class="header-actions absolute top-1/2 -translate-y-1/2 right-4 flex items-center space-x-2">
                 <button id="theme-toggle-btn" class="transition p-2 rounded-full" style="color: var(--icon-color);">
                     <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                     <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
