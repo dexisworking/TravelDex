@@ -302,6 +302,28 @@
             border-radius: 9999px;
             display: block;
         }
+        #iamdex-link-btn .iamdex-fallback {
+            display: none;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #1d4ed8;
+        }
+        #iamdex-link-btn .iamdex-tag {
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 4px);
+            transform: translateX(-50%);
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 3px 6px;
+            border-radius: 9999px;
+            color: #ffffff;
+            background: rgba(37, 99, 235, 0.95);
+            box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
+            white-space: nowrap;
+        }
 
         /* Avatar thumbnail inside profile button */
         #profile-btn { position: fixed; overflow: hidden; }
@@ -555,7 +577,9 @@
         </button>
 
         <a id="iamdex-link-btn" class="topleft-btn" title="Visit iamdex.codes" aria-label="Visit iamdex.codes" href="https://iamdex.codes/" target="_blank" rel="noopener noreferrer">
-            <img src="iamdex_favicon.png" alt="iamdex.codes" />
+            <img src="iamdex_favicon.png" alt="iamdex.codes" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <span class="iamdex-fallback">DX</span>
+            <span class="iamdex-tag">iamdex</span>
         </a>
 
         <!-- Radial bubbles anchor layer -->
