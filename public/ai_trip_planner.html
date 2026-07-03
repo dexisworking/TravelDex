@@ -87,6 +87,15 @@
             --icon-hover-bg: rgba(210, 165, 105, 0.2);
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden !important;
+            position: fixed;
+            -webkit-overflow-scrolling: touch;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
@@ -449,7 +458,7 @@
         #splash-overlay {
             position: fixed;
             inset: 0;
-            background: transparent;
+            background: var(--bg-body);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -473,18 +482,24 @@
     @media (max-width: 640px) {
         #top-search-bar {
             top: 0.75rem;
-            width: calc(100% - 1rem);
+            left: 0.5rem;
+            right: 0.5rem;
+            width: auto;
+            transform: none;
             padding: 0.4rem;
         }
         #search-logo-wrapper { left: 0.75rem; }
         #map-search-input {
-            padding-left: 3.5rem;
-            font-size: 0.95rem;
+            padding-left: 1rem;
+            font-size: 16px !important;
             text-align: left;
         }
         #map-duration-input {
             width: 3rem;
-            font-size: 0.85rem;
+            font-size: 16px !important;
+        }
+        input, select, textarea {
+            font-size: 16px !important;
         }
 
         .topleft-btn {
@@ -500,7 +515,12 @@
         .fullscreen-btn {
             right: 0.75rem;
             padding: 0.6rem;
+            bottom: auto !important;
         }
+        #my-location-btn { top: 4.25rem; }
+        #compass-btn { top: 7rem; }
+        #floating-weather-btn { top: 9.75rem; }
+        #fullscreen-toggle-btn { top: 12.5rem; }
 
         #wallet-drawer .panel {
             top: 0.5rem;
@@ -517,6 +537,14 @@
             max-height: 68dvh;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
+            left: 0;
+            right: 0;
+            transform: none;
+        }
+        #ai-planner-dialog.hidden-dialog {
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
         }
         #ai-planner-dialog header {
             padding: 0.75rem;
@@ -612,7 +640,7 @@
     <div id="map" class="absolute top-0 left-0 w-full h-full z-0"></div>
 
     <div id="top-search-bar" class="glass-dialog fixed top-4 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-2xl rounded-full flex items-center p-2 space-x-1 md:space-x-2 transition-all duration-300 relative" aria-label="Top search bar">
-        <div id="search-logo-wrapper" class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center">
+        <div id="search-logo-wrapper" class="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none items-center">
             <div class="relative h-9 w-16">
                 <img id="search-logo-dark" src="TravelDex dark mode.png" alt="TravelDex Logo" class="absolute inset-0 h-full w-full object-contain object-left">
                 <img id="search-logo-light" src="TravelDex light mode.png" alt="TravelDex Logo" class="absolute inset-0 h-full w-full object-contain object-left hidden">
@@ -654,7 +682,7 @@
         <button id="floating-weather-btn" class="fullscreen-btn" style="bottom: calc(2rem + 7rem); display: flex; align-items: center; justify-content: center;" aria-label="Weather">
             <div id="floating-weather-content" class="flex flex-col items-center justify-center">
                 <div id="floating-weather-icon" class="h-6 w-6" style="display:flex; align-items:center; justify-content:center; color: var(--icon-color);"></div>
-                <span id="floating-weather-temp" style="font-size:10px; line-height:1; color: var(--text-primary);">--Â°C</span>
+                <span id="floating-weather-temp" style="font-size:10px; line-height:1; color: var(--text-primary);">--°C</span>
             </div>
         </button>
 
@@ -689,7 +717,7 @@
                 </svg>
         </button>
     
-    <div id="ai-planner-dialog" class="glass-dialog hidden-dialog fixed bottom-0 left-1/2 z-10 w-[720px] max-w-[95%] rounded-t-2xl flex flex-col max-h-[55vh]">
+    <div id="ai-planner-dialog" class="glass-dialog hidden-dialog fixed bottom-0 left-1/2 z-30 w-[720px] max-w-[95%] rounded-t-2xl flex flex-col max-h-[55vh]">
     <header class="p-4 border-b flex-shrink-0 relative flex items-center gap-2 sm:gap-3" style="border-color: var(--border-color);">
             <div class="relative h-8 w-28 sm:h-10 sm:w-40 flex-shrink-0">
                 <img id="logo-dark-mode" src="TravelDex dark mode.png" alt="Logo Dark" class="absolute inset-0 h-8 sm:h-10 w-full object-contain object-left">
@@ -729,7 +757,7 @@
                     <div class="space-y-2 mt-2">
                         <button id="generate-ai-btn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-all duration-200 flex items-center justify-center font-semibold text-sm">
                             <svg id="ai-btn-icon" class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.685-2.685L11.25 18l1.938-.648a3.375 3.375 0 002.685-2.685L16.25 13.5l.648 1.938a3.375 3.375 0 002.685 2.685L21 18l-1.938.648a3.375 3.375 0 00-2.685 2.685z" /></svg>
-                            <span id="ai-btn-text">Generate âœ¨</span>
+                            <span id="ai-btn-text">Generate ✨</span>
                             <div id="ai-spinner" class="hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         </button>
                         <div class="grid grid-cols-2 gap-2">
@@ -1924,7 +1952,7 @@
                         </div>
                         ${stop.description ? `<p class="text-sm mt-2 pt-2 border-t" style="color: var(--text-secondary); border-color: var(--border-color);">${stop.description}</p>` : ''}
                         <div class="mt-2 pt-2 border-t" style="border-color: var(--border-color);">
-                            <button class="suggest-activities-btn text-sm text-green-400 hover:text-green-500 font-semibold" data-index="${index}">Suggest Activities âœ¨</button>
+                            <button class="suggest-activities-btn text-sm text-green-400 hover:text-green-500 font-semibold" data-index="${index}">Suggest Activities ✨</button>
                             <div class="activities-container text-sm mt-2" style="color: var(--text-secondary);"></div>
                         </div>
                     `;
@@ -1964,11 +1992,11 @@
                 card.className = 'p-3 rounded-lg border';
                 card.style.backgroundColor = 'rgba(0,0,0,0.1)';
                 card.style.borderColor = 'var(--border-color)';
-                const icon = w.type==='flight'?'âœˆï¸':(w.type==='hotel'?'ðŸ¨':(w.type==='train'?'ðŸš†':(w.type==='event'?'ðŸŽŸï¸':'ðŸ—‚ï¸')));
+                const icon = w.type==='flight'?'✈️':(w.type==='hotel'?'🏨':(w.type==='train'?'🚆':(w.type==='event'?'🎫':'📁')));
                 const typeBadge = `<span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--button-secondary-bg); border: 1px solid var(--border-color); color: var(--text-secondary);">${icon} ${w.type}</span>`;
-                const sub = [w.location, w.ref].filter(Boolean).join(' â€¢ ');
-                const route = (w.from && w.to) ? `${w.from} â†’ ${w.to}` : '';
-                const time = [route, w.start && formatShortDT(w.start), w.end && formatShortDT(w.end)].filter(Boolean).join(' â€¢ ');
+                const sub = [w.location, w.ref].filter(Boolean).join(' • ');
+                const route = (w.from && w.to) ? `${w.from} → ${w.to}` : '';
+                const time = [route, w.start && formatShortDT(w.start), w.end && formatShortDT(w.end)].filter(Boolean).join(' • ');
                 card.innerHTML = `
                     <div class="flex items-start justify-between gap-3">
                         <div class="min-w-0">
@@ -2088,7 +2116,7 @@
                             const code = jsQR(imageData.data, canvas.width, canvas.height);
                             const out = document.getElementById('wallet-qr-result');
                             if (code && code.data) {
-                                out.textContent = `QR decoded: ${code.data.substring(0,200)}${code.data.length>200?'â€¦':''}`;
+                                out.textContent = `QR decoded: ${code.data.substring(0,200)}${code.data.length>200?'…':''}`;
                                 // naive extraction: set reference if not set
                                 if (!getValue('wallet-ref')) setValue('wallet-ref', code.data.slice(0,32));
                             } else { out.textContent = 'No QR found in image.'; }
@@ -2600,7 +2628,7 @@
                             const btn = `<button class=\"cuisine-pin-btn px-2 py-1 rounded border text-xs ml-2\" 
                                 style=\"background: var(--button-secondary-bg); border-color: var(--border-color); color: var(--text-primary);\"
                                 data-lat=\"${lat}\" data-lng=\"${lng}\" data-name=\"${(r.name || '').replace(/"/g, '&quot;')}\" data-place-id=\"${r.place_id || ''}\" data-vicinity=\"${vic.replace(/"/g, '&quot;')}\">Mark on Map</button>`;
-                            return `<li class=\"mb-2\"><strong>${r.name}</strong> â€” â­ ${ratings} ${btn}<br/><span class=\"text-xs\" style=\"color: var(--text-secondary);\">${vic}</span></li>`;
+                            return `<li class=\"mb-2\"><strong>${r.name}</strong> — ⭐ ${ratings} ${btn}<br/><span class=\"text-xs\" style=\"color: var(--text-secondary);\">${vic}</span></li>`;
                         })
                         .join('');
                     restaurantsHtml = `<h3 class=\"mt-4\">Nearby Restaurants</h3><ul class=\"list-disc ml-6\">${topItems}</ul>`;
@@ -2818,7 +2846,7 @@
         
         function getPlaceIcon(type, isHighlighted = false) {
             if (isHighlighted) {
-                return { fillColor: '#FFD700', glyphText: 'â˜…', size: 24 };
+                return { fillColor: '#FFD700', glyphText: '★', size: 24 };
             }
             switch(type) {
                 case 'subway_station': return { fillColor: '#4285F4', size: 18 }; // Blue
@@ -2853,7 +2881,7 @@
                 <div style=\"margin-top:6px; font-size:13px; color:${textSecondary}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;\">${place.vicinity || ''}</div>
             `;
             if (isHighlighted && description) {
-                inner += `<p style=\"margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.3); font-style: italic; color: ${highlightTextColor};\">âœ¨ ${description}</p>`;
+                inner += `<p style=\"margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.3); font-style: italic; color: ${highlightTextColor};\">✨ ${description}</p>`;
             }
             const content = `
                 <div style=\"width:300px; color:${textPrimary}; border-radius:14px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
@@ -2889,7 +2917,7 @@
                     position,
                     title: name,
                     fillColor: '#FFD700',
-                    glyphText: 'â˜…',
+                    glyphText: '★',
                     size: 24,
                     zIndex: 200,
                 });
@@ -3506,7 +3534,7 @@
                         <div>
                             <div id="profile-name" class="text-lg font-semibold" style="color: var(--text-primary);">Traveler</div>
                             <div id="profile-email" class="text-sm" style="color: var(--text-secondary);">user@example.com</div>
-                            <div class="text-xs" style="color: var(--text-secondary);">Age: <span id="profile-age">â€”</span></div>
+                            <div class="text-xs" style="color: var(--text-secondary);">Age: <span id="profile-age">—</span></div>
                         </div>
                     </div>
 
@@ -3672,7 +3700,7 @@
                 const prof = getJSON('tdx_profile', {});
                 const name = prof.name || 'Traveler';
                 const email = prof.email || 'user@example.com';
-                const age = prof.age || 'â€”';
+                const age = prof.age || '—';
                 const avatar = prof.avatar || '';
                 document.getElementById('profile-name').textContent = name;
                 document.getElementById('profile-email').textContent = email;
@@ -3689,8 +3717,8 @@
                 const dests = new Set((window.itinerary||[]).map(i => i?.title || i?.name).filter(Boolean));
                 document.getElementById('stat-trips').textContent = String(trips);
                 document.getElementById('stat-dests').textContent = String(dests.size);
-                document.getElementById('stat-fav-city').textContent = prof.favCity || (window.itinerary?.[0]?.city || 'â€”');
-                document.getElementById('stat-fav-country').textContent = prof.favCountry || 'â€”';
+                document.getElementById('stat-fav-city').textContent = prof.favCity || (window.itinerary?.[0]?.city || '—');
+                document.getElementById('stat-fav-country').textContent = prof.favCountry || '—';
 
                 // Wallet overview
                 const wl = document.getElementById('wallet-list');
@@ -3739,7 +3767,7 @@
                 // Settings form
                 document.getElementById('settings-name').value = name === 'Traveler' ? '' : name;
                 document.getElementById('settings-email').value = email === 'user@example.com' ? '' : email;
-                document.getElementById('settings-age').value = age && age !== 'â€”' ? age : '';
+                document.getElementById('settings-age').value = age && age !== '—' ? age : '';
                 const prefs = getJSON('tdx_prefs', { currency: 'INR', language: 'English', units: 'Metric', notifEmail: false, notifPush: false });
                 document.getElementById('pref-currency-label').textContent = prefs.currency;
                 document.getElementById('pref-language-label').textContent = prefs.language;
